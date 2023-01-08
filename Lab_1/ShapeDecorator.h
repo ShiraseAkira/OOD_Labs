@@ -44,7 +44,6 @@ public:
 	void rotate(float angle);
 	void scale(float factorX, float factorY);
 	void scale(const sf::Vector2f& factor);
-
 	const sf::Transform& getTransform() const;
 	const sf::Transform& getInverseTransform() const;
 
