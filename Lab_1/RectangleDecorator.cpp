@@ -15,12 +15,20 @@ sf::Vector2f RectangleDecorator::getPoint(size_t index) const {
 	return m_decoratee->getPoint(index);
 }
 
+void RectangleDecorator::setSize(const sf::Vector2f& size) {
+	static_cast<sf::RectangleShape*>(m_decoratee.get())->setSize(size);
+}
+
+const sf::Vector2f& RectangleDecorator::getSize() const {
+	return static_cast<sf::RectangleShape*>(m_decoratee.get())->getSize();
+}
+
 double RectangleDecorator::GetArea() const {
-	auto size = static_cast<sf::RectangleShape*>(m_decoratee.get())->getSize();
+	auto size = getSize();
 	return round(size.x * size.y);
 }
 double RectangleDecorator::GetPerimeter() const {
-	auto size = static_cast<sf::RectangleShape*>(m_decoratee.get())->getSize();
+	auto size = getSize();
 	return round((size.x + size.y) * 2);
 }
 

@@ -44,5 +44,5 @@ double TriangleDecorator::GetPerimeter() const {
 }
 
 string TriangleDecorator::ToString() const {
-	return TO_STRING_PREFIX + "P=" + to_string((int)GetPerimeter()) + "; S=" + to_string(GetArea());
+	return TO_STRING_PREFIX + "P=" + to_string((int)GetPerimeter()) + "; S=" + to_string((int)GetArea());
 }
