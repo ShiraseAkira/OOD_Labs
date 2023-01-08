@@ -11,8 +11,8 @@ public:
 	void setRadius(float radius);
 	float getRadius() const;
 
-	double GetArea() const;
-	double GetPerimeter() const;
-	string ToString() const;
+	double getArea() const;
+	double getPerimeter() const;
+	string toString() const;
 };
 

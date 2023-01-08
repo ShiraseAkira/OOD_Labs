@@ -1,11 +1,13 @@
-#include "CircleDecorator.h"
-#include "RectangleDecorator.h"
-#include "TriangleDecorator.h"
-#include <SFML/Graphics.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream> 
 #include <algorithm>
+
+#include <SFML/Graphics.hpp>
+
+#include "CircleDecorator.h"
+#include "RectangleDecorator.h"
+#include "TriangleDecorator.h"
 
 using namespace std;
 
@@ -14,8 +16,10 @@ const string CIRCLE_PREFIX = "CIRCLE:";
 const string RECTANGLE_PREFIX = "RECTANGLE:";
 const string TRIANGLE_PREFIX = "TRIANGLE:";
 
-const string ARGUMENT_COUNT_ERROR = "invalid argument count\nusage: <executable> <input_file> | uses default output.txt\n"
-    "or : <executable> <input_file> <output_file> | uses default output.txt";
+const string ARGUMENT_COUNT_ERROR = "invalid argument count\nusage: <executable>"
+                                    " <input_file> | uses default output.txt\n"
+                                    "or : <executable> <input_file> <output_file>"
+                                    " | uses default output.txt";
 
 const string INPUT_ERROR = "Input Error: could not open ";
 const string OUTPUT_ERROR = "Output Error: could not open ";
@@ -60,7 +64,10 @@ int main(int argc, char* argv[])
         istringstream iss(line);
         string figureType;
         iss >> figureType;
-        replace_if(line.begin(), line.end(), [](unsigned char c) { return std::isalpha(c) || std::ispunct(c); }, ' ');
+        replace_if(line.begin(), 
+            line.end(),
+            [](unsigned char c) { return std::isalpha(c) || std::ispunct(c); },
+            ' ');
 
         if (figureType == CIRCLE_PREFIX) {
             istringstream iss(line);
@@ -71,7 +78,7 @@ int main(int argc, char* argv[])
             circle.setRadius(r);
             window.draw(circle);
             
-            output << circle.ToString() << endl;
+            output << circle.toString() << endl;
         }
         else if (figureType == RECTANGLE_PREFIX) {
             istringstream iss(line);
@@ -83,13 +90,14 @@ int main(int argc, char* argv[])
             rectangle.setSize(sf::Vector2f(x2 - x1, y2 - y1));
             window.draw(rectangle);
 
-            output << rectangle.ToString() << endl;
+            output << rectangle.toString() << endl;
         }
         else if (figureType == TRIANGLE_PREFIX) {
             istringstream iss(line);
             float skip;
             sf::Vector2f p1, p2, p3;
-            iss >> skip >> p1.x >> p1.y >> skip >> p2.x >> p2.y >> skip >> p3.x >> p3.y;
+            iss >> skip >> p1.x >> p1.y >> skip
+                >> p2.x >> p2.y >> skip >> p3.x >> p3.y;
 
             TriangleDecorator triangle(make_unique<sf::ConvexShape>());
             triangle.setPointCount(3);
@@ -99,7 +107,7 @@ int main(int argc, char* argv[])
             triangle.move(-50, 0);
             window.draw(triangle);
 
-            output << triangle.ToString() << endl;
+            output << triangle.toString() << endl;
         }
 
     }

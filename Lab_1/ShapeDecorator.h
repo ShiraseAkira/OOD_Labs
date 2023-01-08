@@ -1,7 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <memory>
 #include <string>
+
+#include <SFML/Graphics.hpp>
+
 using namespace std;
 
 class ShapeDecorator :
@@ -48,9 +50,9 @@ public:
 	const sf::Transform& getInverseTransform() const;
 
 
-	virtual double GetArea() const = 0;
-	virtual double GetPerimeter() const = 0;
-	virtual string ToString() const = 0;
+	virtual double getArea() const = 0;
+	virtual double getPerimeter() const = 0;
+	virtual string toString() const = 0;
 
 protected:
 	unique_ptr<sf::Shape> m_decoratee;

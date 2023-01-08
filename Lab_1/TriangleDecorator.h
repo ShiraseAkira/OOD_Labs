@@ -11,10 +11,11 @@ public:
 	void setPointCount(size_t count);
 	void setPoint(size_t index, const sf::Vector2f& point);
 
-	double GetArea() const;
-	double GetPerimeter() const;
-	string ToString() const;
+	double getArea() const;
+	double getPerimeter() const;
+	string toString() const;
 
-	double GetVectorLength(sf::Vector2f p1, sf::Vector2f p2) const;
+protected:
+	double getVectorLength(sf::Vector2f p1, sf::Vector2f p2) const;
 };
 

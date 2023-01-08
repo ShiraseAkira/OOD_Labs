@@ -23,15 +23,15 @@ const sf::Vector2f& RectangleDecorator::getSize() const {
 	return static_cast<sf::RectangleShape*>(m_decoratee.get())->getSize();
 }
 
-double RectangleDecorator::GetArea() const {
+double RectangleDecorator::getArea() const {
 	auto size = getSize();
 	return round(size.x * size.y);
 }
-double RectangleDecorator::GetPerimeter() const {
+double RectangleDecorator::getPerimeter() const {
 	auto size = getSize();
 	return round((size.x + size.y) * 2);
 }
 
-string RectangleDecorator::ToString() const {
-	return TO_STRING_PREFIX + "P=" + to_string((int)GetPerimeter()) + "; S=" + to_string((int)GetArea());
+string RectangleDecorator::toString() const {
+	return TO_STRING_PREFIX + "P=" + to_string((int)getPerimeter()) + "; S=" + to_string((int)getArea());
 }

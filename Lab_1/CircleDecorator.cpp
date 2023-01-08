@@ -23,15 +23,15 @@ float CircleDecorator::getRadius() const {
 	return static_cast<sf::CircleShape*>(m_decoratee.get())->getRadius();
 }
 
-double CircleDecorator::GetArea() const { 
+double CircleDecorator::getArea() const { 
 	auto r = getRadius();
 	return round(M_PI * r * r);
 }
-double CircleDecorator::GetPerimeter() const {
+double CircleDecorator::getPerimeter() const {
 	auto r = getRadius();
 	return round(2 * M_PI * r);
 }
 
-string CircleDecorator::ToString() const { 
-	return TO_STRING_PREFIX + "P=" + to_string((int)GetPerimeter()) + "; S=" + to_string((int)GetArea());
+string CircleDecorator::toString() const { 
+	return TO_STRING_PREFIX + "P=" + to_string((int)getPerimeter()) + "; S=" + to_string((int)getArea());
 }
