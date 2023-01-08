@@ -62,7 +62,6 @@ int main(int argc, char* argv[])
         istringstream iss(line);
         string figureType;
         iss >> figureType;
-        replace_if(line.begin(), line.end(), [](unsigned char c) { return std::isalpha(c) || std::ispunct(c); }, ' ');
 
         if (figureType == CIRCLE_PREFIX) {
             CircleDecorator circle(circleCreator->createShape(line));
