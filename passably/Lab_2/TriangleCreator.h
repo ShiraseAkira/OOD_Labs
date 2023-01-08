@@ -4,10 +4,10 @@ class TriangleCreator :
     public IShapeCreator
 {
 public:
-	static TriangleCreator* GetInstance();
+	static TriangleCreator* getInstance();
 	TriangleCreator(TriangleCreator& other) = delete;
 	void operator=(const TriangleCreator&) = delete;
-	unique_ptr<sf::Shape> CreateShape(string& shapeDescription) override;
+	unique_ptr<sf::Shape> createShape(string& shapeDescription) override;
 
 protected:
 	TriangleCreator() = default;

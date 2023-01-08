@@ -3,14 +3,14 @@
 
 RectangleCreator* RectangleCreator::m_Creator = nullptr;
 
-RectangleCreator* RectangleCreator::GetInstance() {
+RectangleCreator* RectangleCreator::getInstance() {
 	if (m_Creator == nullptr) {
 		m_Creator = new RectangleCreator();
 	}
 	return m_Creator;
 }
 
-unique_ptr<sf::Shape> RectangleCreator::CreateShape(string& shapeDescription) {
+unique_ptr<sf::Shape> RectangleCreator::createShape(string& shapeDescription) {
 	istringstream iss(getShapeNumbersDescription(shapeDescription));
 	float x1, y1, x2, y2, skip;
 	iss >> skip >> x1 >> y1 >> skip >> x2 >> y2;

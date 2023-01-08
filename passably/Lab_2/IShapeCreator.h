@@ -7,7 +7,7 @@ using namespace std;
 class IShapeCreator
 {
 public:
-	virtual unique_ptr<sf::Shape> CreateShape(string& shapeDescription) = 0;
+	virtual unique_ptr<sf::Shape> createShape(string& shapeDescription) = 0;
 protected:
 	string getShapeNumbersDescription(string& shapeDescription);
 };

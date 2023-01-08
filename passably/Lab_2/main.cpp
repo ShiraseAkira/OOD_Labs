@@ -1,14 +1,16 @@
+#include <fstream>
+#include <sstream>
+#include <iostream> 
+#include <algorithm>
+
+#include <SFML/Graphics.hpp>
+
 #include "CircleDecorator.h"
 #include "CircleCreator.h"
 #include "RectangleDecorator.h"
 #include "RectangleCreator.h"
 #include "TriangleDecorator.h"
 #include "TriangleCreator.h"
-#include <SFML/Graphics.hpp>
-#include <fstream>
-#include <sstream>
-#include <iostream> 
-#include <algorithm>
 
 using namespace std;
 
@@ -17,8 +19,10 @@ const string CIRCLE_PREFIX = "CIRCLE:";
 const string RECTANGLE_PREFIX = "RECTANGLE:";
 const string TRIANGLE_PREFIX = "TRIANGLE:";
 
-const string ARGUMENT_COUNT_ERROR = "invalid argument count\nusage: <executable> <input_file> | uses default output.txt\n"
-    "or : <executable> <input_file> <output_file> | uses default output.txt";
+const string ARGUMENT_COUNT_ERROR = "invalid argument count\nusage: <executable>"
+                                    " <input_file> | uses default output.txt\n"
+                                    "or : <executable> <input_file> <output_file>"
+                                    " | uses default output.txt";
 
 const string INPUT_ERROR = "Input Error: could not open ";
 const string OUTPUT_ERROR = "Output Error: could not open ";
@@ -40,9 +44,7 @@ int main(int argc, char* argv[])
     }
 
     ofstream output;
-    string fileToOpen = (argc == 2)
-        ? DEFAULT_OUTPUT_FILENAME 
-        : argv[2];
+    string fileToOpen = (argc == 2) ? DEFAULT_OUTPUT_FILENAME : argv[2];
     output.open(fileToOpen);
     if (!output.is_open()) {
         cout << OUTPUT_ERROR << fileToOpen << endl;
@@ -51,9 +53,9 @@ int main(int argc, char* argv[])
 
     sf::RenderWindow window(sf::VideoMode(800, 600), WINDOW_TITLE);
     
-    CircleCreator* circleCreator = CircleCreator::GetInstance();
-    RectangleCreator* rectangleCreator = RectangleCreator::GetInstance();
-    TriangleCreator* triangleCreator = TriangleCreator::GetInstance();
+    CircleCreator* circleCreator = CircleCreator::getInstance();
+    RectangleCreator* rectangleCreator = RectangleCreator::getInstance();
+    TriangleCreator* triangleCreator = TriangleCreator::getInstance();
 
     string line;
     while (getline(input, line)) {
@@ -63,26 +65,29 @@ int main(int argc, char* argv[])
         replace_if(line.begin(), line.end(), [](unsigned char c) { return std::isalpha(c) || std::ispunct(c); }, ' ');
 
         if (figureType == CIRCLE_PREFIX) {
-            CircleDecorator circle(circleCreator->CreateShape(line));
+            CircleDecorator circle(circleCreator->createShape(line));
 
             window.draw(circle);            
-            output << circle.ToString() << endl;
+            output << circle.toString() << endl;
         }
         else if (figureType == RECTANGLE_PREFIX) {
-            RectangleDecorator rectangle(rectangleCreator->CreateShape(line));
+            RectangleDecorator rectangle(rectangleCreator->createShape(line));
 
             window.draw(rectangle);
-            output << rectangle.ToString() << endl;
+            output << rectangle.toString() << endl;
         }
         else if (figureType == TRIANGLE_PREFIX) {
-            TriangleDecorator triangle(triangleCreator->CreateShape(line));
+            TriangleDecorator triangle(triangleCreator->createShape(line));
 
             window.draw(triangle);
-            output << triangle.ToString() << endl;
+            output << triangle.toString() << endl;
         }
 
     }
     window.display();
+
+    input.close();
+    output.close();
 
     while (window.isOpen())
     {

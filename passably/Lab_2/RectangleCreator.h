@@ -4,10 +4,10 @@ class RectangleCreator :
     public IShapeCreator
 {
 public:
-	static RectangleCreator* GetInstance();
+	static RectangleCreator* getInstance();
 	RectangleCreator(RectangleCreator& other) = delete;
 	void operator=(const RectangleCreator&) = delete;
-	unique_ptr<sf::Shape> CreateShape(string& shapeDescription) override;
+	unique_ptr<sf::Shape> createShape(string& shapeDescription) override;
 
 protected:
 	RectangleCreator() = default;

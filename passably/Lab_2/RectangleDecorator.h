@@ -11,8 +11,8 @@ public:
 	void setSize(const sf::Vector2f& size);
 	const sf::Vector2f& getSize() const;
 
-	double GetArea() const;
-	double GetPerimeter() const;
-	string ToString() const;
+	double getArea() const;
+	double getPerimeter() const;
+	string toString() const;
 };
 

@@ -5,10 +5,10 @@ class CircleCreator:
 	public IShapeCreator
 {
 public:
-	static CircleCreator *GetInstance();
-	CircleCreator(CircleCreator& other) = delete;
+	static CircleCreator *getInstance();
+	CircleCreator(CircleCreator&) = delete;
 	void operator=(const CircleCreator&) = delete;
-	unique_ptr<sf::Shape> CreateShape(string& shapeDescription) override;
+	unique_ptr<sf::Shape> createShape(string& shapeDescription) override;
 	
 protected:
 	CircleCreator() = default;

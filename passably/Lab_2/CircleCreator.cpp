@@ -3,14 +3,14 @@
 
 CircleCreator* CircleCreator::m_Creator = nullptr;
 
-CircleCreator *CircleCreator::GetInstance() {
+CircleCreator *CircleCreator::getInstance() {
 	if (m_Creator == nullptr) {
 		m_Creator = new CircleCreator();
 	}
 	return m_Creator;
 }
 
-unique_ptr<sf::Shape> CircleCreator::CreateShape(string& shapeDescription) {
+unique_ptr<sf::Shape> CircleCreator::createShape(string& shapeDescription) {
 	istringstream iss(getShapeNumbersDescription(shapeDescription));
 	float x, y, r;
 	iss >> x >> y >> r;

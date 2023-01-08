@@ -3,14 +3,14 @@
 
 TriangleCreator* TriangleCreator::m_Creator = nullptr;
 
-TriangleCreator* TriangleCreator::GetInstance() {
+TriangleCreator* TriangleCreator::getInstance() {
 	if (m_Creator == nullptr) {
 		m_Creator = new TriangleCreator();
 	}
 	return m_Creator;
 }
 
-unique_ptr<sf::Shape> TriangleCreator::CreateShape(string& shapeDescription) {
+unique_ptr<sf::Shape> TriangleCreator::createShape(string& shapeDescription) {
 	istringstream iss(getShapeNumbersDescription(shapeDescription));
 	float skip;
 	sf::Vector2f p1, p2, p3;
