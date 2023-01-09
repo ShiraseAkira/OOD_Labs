@@ -1,8 +1,12 @@
 #include "Composite.h"
+Composite::Composite() {};
 
 void Composite::add(ShapeDecorator* shape) {
-	shape->setSelected(false);
 	m_shapes.push_back(shape);
+}
+
+void Composite::remove(ShapeDecorator* shape) {
+	m_shapes.remove(shape);
 }
 
 void Composite::setPosition(float x, float y) {
@@ -63,4 +67,27 @@ const sf::Vector2f& Composite::getPosition() const {
 
 list<ShapeDecorator*> Composite::getShapes() const {
 	return m_shapes;
+}
+
+void Composite::move(float offsetX, float offsetY) {
+	for (ShapeDecorator* shape : m_shapes) {
+		shape->move(offsetX, offsetY);
+	}
+}
+
+
+double Composite::getArea() const {
+	return 0;
+}
+double Composite::getPerimeter() const {
+	return 0;
+}
+string Composite::toString() const {
+	return "str";
+}
+size_t Composite::getPointCount() const {
+	return 0;
+}
+sf::Vector2f Composite::getPoint(size_t index) const {
+	return sf::Vector2f(0, 0);
 }

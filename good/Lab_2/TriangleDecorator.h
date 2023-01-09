@@ -10,6 +10,8 @@ public:
 	virtual sf::Vector2f getPoint(size_t index) const;
 	void setPointCount(size_t count);
 	void setPoint(size_t index, const sf::Vector2f& point);
+	sf::FloatRect getGlobalBounds() const;
+	void move(float offsetX, float offsetY);
 
 	double getArea() const;
 	double getPerimeter() const;

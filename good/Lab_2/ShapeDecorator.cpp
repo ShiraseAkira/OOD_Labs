@@ -4,7 +4,7 @@ ShapeDecorator::ShapeDecorator(unique_ptr<sf::Shape> shape)
 	,m_selected(false)
 {}
 
-
+ShapeDecorator::ShapeDecorator() {}
 
 void ShapeDecorator::setTexture(const sf::Texture* texture, bool resetRect) {
 	(*m_decoratee).setTexture(texture, resetRect);
@@ -50,9 +50,9 @@ sf::FloatRect ShapeDecorator::getLocalBounds() const {
 	return (*m_decoratee).getLocalBounds();
 }
 
-sf::FloatRect ShapeDecorator::getGlobalBounds() const {
-	return (*m_decoratee).getGlobalBounds();
-}
+//sf::FloatRect ShapeDecorator::getGlobalBounds() const {
+//	return (*m_decoratee).getGlobalBounds();
+//}
 
 
 void ShapeDecorator::draw(sf::RenderTarget& window, sf::RenderStates state) const {
@@ -114,9 +114,9 @@ const sf::Vector2f& ShapeDecorator::getOrigin() const {
 	return (*m_decoratee).getOrigin();
 }
 
-void ShapeDecorator::move(float offsetX, float offsetY) {
-	(*m_decoratee).move(offsetX, offsetY);
-}
+//void ShapeDecorator::move(float offsetX, float offsetY) {
+//	(*m_decoratee).move(offsetX, offsetY);
+//}
 
 void ShapeDecorator::move(const sf::Vector2f& offset) {
 	(*m_decoratee).move(offset);

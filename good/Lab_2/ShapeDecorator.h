@@ -10,6 +10,7 @@ class ShapeDecorator :
 	public sf::Shape
 {
 public:
+	ShapeDecorator();
 	ShapeDecorator(unique_ptr<sf::Shape> shape);
 	virtual ~ShapeDecorator() = default;
 
@@ -25,7 +26,7 @@ public:
 	const sf::Color& getOutlineColor() const;
 	float getOutlineThickness() const;
 	sf::FloatRect getLocalBounds() const;
-	sf::FloatRect getGlobalBounds() const;
+	virtual sf::FloatRect getGlobalBounds() const = 0;
 
 	void draw(sf::RenderTarget& window, sf::RenderStates state) const;
 
@@ -41,7 +42,7 @@ public:
 	float getRotation() const;
 	const sf::Vector2f& getScale() const;
 	const sf::Vector2f& getOrigin() const;
-	void move(float offsetX, float offsetY);
+	virtual void move(float offsetX, float offsetY) = 0;
 	void move(const sf::Vector2f& offset);
 	void rotate(float angle);
 	void scale(float factorX, float factorY);

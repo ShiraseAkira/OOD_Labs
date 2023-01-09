@@ -35,3 +35,10 @@ double CircleDecorator::getPerimeter() const {
 string CircleDecorator::toString() const { 
 	return TO_STRING_PREFIX + "P=" + to_string((int)getPerimeter()) + "; S=" + to_string((int)getArea());
 }
+
+sf::FloatRect CircleDecorator::getGlobalBounds() const {
+	return (*m_decoratee).getGlobalBounds();
+}
+void CircleDecorator::move(float offsetX, float offsetY) {
+	(*m_decoratee).move(offsetX, offsetY);
+}

@@ -35,3 +35,9 @@ double RectangleDecorator::getPerimeter() const {
 string RectangleDecorator::toString() const {
 	return TO_STRING_PREFIX + "P=" + to_string((int)getPerimeter()) + "; S=" + to_string((int)getArea());
 }
+sf::FloatRect RectangleDecorator::getGlobalBounds() const {
+	return (*m_decoratee).getGlobalBounds();
+}
+void RectangleDecorator::move(float offsetX, float offsetY) {
+	(*m_decoratee).move(offsetX, offsetY);
+}

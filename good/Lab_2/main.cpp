@@ -9,6 +9,7 @@
 #include "CircleDecorator.h"
 #include "RectangleDecorator.h"
 #include "TriangleDecorator.h"
+#include "Composite.h"
 
 using namespace std;
 
@@ -51,7 +52,7 @@ int main(int argc, char* argv[])
 
     sf::RenderWindow window(sf::VideoMode(800, 600), WINDOW_TITLE);
 
-    list<ShapeDecorator*> shapes;
+    Composite shapes;
 
     string line;
     while (getline(input, line)) {
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
             circle->setRadius(r);
             circle->setFillColor(sf::Color::Blue);
 
-            shapes.push_back(circle);
+            shapes.add(circle);
             output << circle->toString() << endl;
         }
         else if (figureType == RECTANGLE_PREFIX) {
@@ -87,7 +88,7 @@ int main(int argc, char* argv[])
             rectangle->setSize(sf::Vector2f(x2 - x1, y2 - y1));
             rectangle->setFillColor(sf::Color::Magenta);
 
-            shapes.push_back(rectangle);
+            shapes.add(rectangle);
             output << rectangle->toString() << endl;
         }
         else if (figureType == TRIANGLE_PREFIX) {
@@ -105,26 +106,113 @@ int main(int argc, char* argv[])
             triangle->setPoint(2, p3);
             triangle->setFillColor(sf::Color::Cyan);
 
-            shapes.push_back(triangle);
+            shapes.add(triangle);
             output << triangle->toString() << endl;
         }
 
     }
-    window.display();
 
+    bool isLmbPressedOnShape = false;
+    list<ShapeDecorator*> selectedShapes;
+    sf::Vector2i mousePressPosition(0, 0);
     while (window.isOpen()) {
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+        
+            if (event.type == sf::Event::MouseButtonPressed
+                && event.key.code == sf::Mouse::Left) {
+                for (auto shape : shapes.getShapes()) {
+                    if (shape->getGlobalBounds().contains((float)mousePosition.x, (float)mousePosition.y)) {
+                        isLmbPressedOnShape = true;
+                        mousePressPosition = sf::Mouse::getPosition(window);
+
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+                            if (!shape->isSelected()) {
+                                shape->setSelected(true);
+                                selectedShapes.push_back(shape);
+                            }
+                        }
+                        else {
+                            if (!shape->isSelected()) {
+                                shape->setSelected(true);
+                                selectedShapes.clear();
+                                selectedShapes.push_back(shape);
+                                for (auto shapeToRemoveSelection : shapes.getShapes()) {
+                                    if (shapeToRemoveSelection != shape)
+                                        shapeToRemoveSelection->setSelected(false);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (!isLmbPressedOnShape) {
+                    for (auto shape : shapes.getShapes()) {
+                        shape->setSelected(false);
+                    }
+                }
+            }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+                    if (!selectedShapes.empty()) {
+                        Composite* compoundFigure = new Composite();
+                        for (auto shape : selectedShapes) {
+                            compoundFigure->add(shape);
+                            shape->setSelected(false);
+                            shapes.remove(shape);
+                        }
+                        selectedShapes.clear();
+                        compoundFigure->setSelected(true);
+                        shapes.add(compoundFigure);
+                    }
+
+                }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
+                    if (selectedShapes.size() == 1 && static_cast<Composite*>(selectedShapes.front())) {
+                        Composite* compoundFigure = dynamic_cast<Composite*>(selectedShapes.front());
+                        list<ShapeDecorator*> shapesCompound = compoundFigure->getShapes();
+                        shapes.remove(compoundFigure);
+                        for (auto shape : shapesCompound) {
+                            shapes.add(shape);
+                        }
+                    }
+                }
+
+
+            if (event.type == sf::Event::MouseButtonReleased
+                && event.key.code == sf::Mouse::Left) {
+                isLmbPressedOnShape = false;
+            }
+        }
+
+        if (isLmbPressedOnShape) {
+            sf::Vector2i mouseCurrentPosition = sf::Mouse::getPosition(window);
+            for (auto shape : shapes.getShapes()) {
+                if (shape->isSelected()) {
+                    shape->move(mouseCurrentPosition.x - mousePressPosition.x,
+                        mouseCurrentPosition.y - mousePressPosition.y);
+                }
+            }
+            mousePressPosition = mouseCurrentPosition;
         }
 
         window.clear();
-        for (auto shape : shapes) {
+        for (auto shape : shapes.getShapes()) {
             window.draw(*shape);
         }
         window.display();
     }
+
+    input.close();
+    output.close();
 
     return 0;
 }
